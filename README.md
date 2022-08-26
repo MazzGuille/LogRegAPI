@@ -26,7 +26,7 @@ EmailUsu varchar(50)
 
 
 
-create proc SP_RegistrarUsuario(
+[create proc SP_RegistrarUsuario(
 @Nombre varchar(50)
 ,@UserName varchar(50)
 ,@Email varchar(50)
@@ -42,7 +42,7 @@ begin
 		DECLARE @Id int = (SELECT IDENT_CURRENT('Usuario'))
 	end
   
-end
+end]
 
 
 
