@@ -1,26 +1,27 @@
 -TABLAS Y SP PARA LA BASE DE DATOS (SQL SERVER)-
+
 -TABLES & SP FOR THE DATABSE (SQL SERVER)-
 
 
 
 
-create table Usuario(
+[create table Usuario(
 Id int primary key identity(1,1),
 Nombre varchar(50),
 UserName varchar(50),
 Email varchar(50),
 Contraseña varchar(50)
-)
+)]
 
 
 
 
-create table Documentos(
+[create table Documentos(
 IdDocumento int primary key identity(1,1),
 Descripcion varchar(100),
 Ruta varchar(100),
 EmailUsu varchar(50)
-)
+)]
 
 
 
