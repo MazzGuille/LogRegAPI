@@ -1,9 +1,9 @@
-TABLAS Y SP PARA LA BASE DE DATOS (SQL SERVER)
-TABLES & SP FOR THE DATABSE (SQL SERVER)
+-TABLAS Y SP PARA LA BASE DE DATOS (SQL SERVER)-
+-TABLES & SP FOR THE DATABSE (SQL SERVER)-
 
 
--------------------------------------------------------TABLAS/TABLES----------------------------------------------------------------------
 
+*
 create table Usuario(
 Id int primary key identity(1,1),
 Nombre varchar(50),
@@ -11,14 +11,21 @@ UserName varchar(50),
 Email varchar(50),
 Contraseña varchar(50)
 )
+*
 
+
+
+*
 create table Documentos(
 IdDocumento int primary key identity(1,1),
 Descripcion varchar(100),
 Ruta varchar(100),
 EmailUsu varchar(50)
 )
----------------------------------------------------------------SP------------------------------------------------------------------------
+*
+
+
+*
 create proc SP_RegistrarUsuario(
 @Nombre varchar(50)
 ,@UserName varchar(50)
@@ -36,7 +43,10 @@ begin
 	end
   
 end
----------------------------------------------------------------------------------------------------------------------------------------
+*
+
+
+*
 create proc SP_Login(
 @Email varchar(50)
 ,@Contraseña varchar(50)
@@ -51,13 +61,18 @@ BEGIN
 	SELECT '0'
   
 END
----------------------------------------------------------------------------------------------------------------------------------------
+*
+
+
+*
 create proc SP_ListarUsuarios
 As
 Begin
 Select * From Usuario
 end
------------------------------------------------------------------------------------------------------------------------------
+*
+
+*
 create proc SP_GuardarDocumentos(
 @descripcion varchar(100)
 ,@Ruta varchar(100)
@@ -71,3 +86,4 @@ Begin
 	--from Documentos as D
 	--inner join Usuario as U on U.Id = D.EmailUsu
 end
+*
