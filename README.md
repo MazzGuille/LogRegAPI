@@ -24,7 +24,7 @@ EmailUsu varchar(50)
 )]
 
 
-
+<br>
 
 create proc SP_RegistrarUsuario(
 @Nombre varchar(50)
@@ -45,7 +45,7 @@ begin
 end
 
 
-
+<br>
 
 create proc SP_Login(
 @Email varchar(50)
@@ -63,7 +63,7 @@ BEGIN
 END
 
 
-
+<br>
 
 create proc SP_ListarUsuarios
 As
@@ -71,7 +71,7 @@ Begin
 Select * From Usuario
 end
 
-
+<br>
 
 create proc SP_GuardarDocumentos(
 @descripcion varchar(100)
