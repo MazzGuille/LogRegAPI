@@ -7,15 +7,15 @@ namespace LoginRegistroAPI.Models
     {
         public int IdUsuario { get; set; }
         [Required]
-        public string? Email { get; set; }
+        public string Email { get; set; }
         [Required]
-        public string? Nombre { get; set; }
+        public string Nombre { get; set; }
         [Required]
-        public string? UserName { get; set; }
+        public string UserName { get; set; }
         [Required]
-        public string? Contraseña { get; set; }
-        //[Required]
-        //public string ConfirmarClave { get; set; } = string.Empty;      
+        public string Contraseña { get; set; }
+        [Required]
+        public string ConfirmarClave { get; set; }
         //[MaybeNull]
         //public byte ImagenPerfil { get; set; }
         //[MaybeNull]

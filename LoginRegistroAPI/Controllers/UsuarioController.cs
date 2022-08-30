@@ -19,7 +19,7 @@ namespace LoginRegistroAPI.Controllers
         }
 
         [HttpPost("Login")]
-        public async Task<string> Login([FromBody] Usuario Ob)
+        public async Task<string> Login([FromBody] UsuarioLogin Ob)
         {
             try
             {

@@ -40,14 +40,16 @@ namespace LoginRegistroAPI.Servicios.Logica
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.ExecuteNonQuery();
             }
-            var response = "Se ha creado el usuairo con exito";
+            var response = "Se ha creado el usuario con exito";
             return await Task.FromResult(response);
         }
 
-        public async Task<string> PostLogin(Usuario Ob)
+        public async Task<string> PostLogin(UsuarioLogin Ob)
         {
+
             try
             {
+
                 using (SqlConnection conexion = new(cn.GetCadenaSQL()))
                 {
                     conexion.Open();
@@ -56,8 +58,10 @@ namespace LoginRegistroAPI.Servicios.Logica
                     cmd.Parameters.AddWithValue("Contraseña", Ob.Contraseña);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.ExecuteNonQuery();
+
                 }
-                //LLAMAMOS AL METODO QUE GENERO EL JWT("Autorizacion(Ob)") Y LO ALMACENAMOS EN "response"
+
+                //LLAMAMOS AL METODO QUE GENERO EL JW T("Autorizacion(Ob)") Y LO ALMACENAMOS EN "response"                
                 string response = Autorizacion(Ob);
                 return await Task.FromResult(response.ToString());
             }
@@ -127,7 +131,7 @@ namespace LoginRegistroAPI.Servicios.Logica
 
 
         //------------------------------METODO PARA CREAR Y LEER EL JWT START------------------------------//
-        private string Autorizacion(Usuario request)
+        private string Autorizacion(UsuarioLogin request)
         {
             var keyBytes = Encoding.ASCII.GetBytes(_secretKey);
 

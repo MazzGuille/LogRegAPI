@@ -41,15 +41,9 @@ builder.Services.AddAuthentication(config =>
 
 //--------------------------------------------CONFIGURACION CORS START--------------------------------------------//
 
-
 builder.Services.AddCors(options =>
 
 options.AddPolicy("AllowWebApp", builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
-
-
-
-
-
 
 //--------------------------------------------CONFIGURACION CORS END--------------------------------------------//
 
