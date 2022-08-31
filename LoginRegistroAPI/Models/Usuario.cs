@@ -5,7 +5,7 @@ namespace LoginRegistroAPI.Models
 {
     public class Usuario
     {
-        public int IdUsuario { get; set; }
+        public int Id { get; set; }
         [Required]
         public string Email { get; set; }
         [Required]
@@ -16,11 +16,13 @@ namespace LoginRegistroAPI.Models
         public string Contraseña { get; set; }
         [Required]
         public string ConfirmarClave { get; set; }
-        //[MaybeNull]
-        //public byte ImagenPerfil { get; set; }
-        //[MaybeNull]
-        //public string BioUsuario { get; set; } = string.Empty;
+        public string BioUsuario { get; set; }
 
+        //Para poder obtener la imagen en bytes
+        //public byte ImagenPerfil { get; set; }
+
+        //para valdiar si existe o no la imagen
+        //public bool ImgPerf { get; set; }
 
     }
 }

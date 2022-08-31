@@ -18,13 +18,26 @@ namespace LoginRegistroAPI.Controllers
             _usuario = Usuario;
         }
 
+        private string Exception()
+        {
+            throw new NotImplementedException();
+        }
+
         [HttpPost("Login")]
         public async Task<string> Login([FromBody] UsuarioLogin Ob)
         {
             try
             {
                 var response = await _usuario.PostLogin(Ob);
-                return response.ToString();
+                if (response != "Error")
+                {
+                    return response;
+                }
+                else
+                {
+                    return null;
+                }
+
             }
             catch (Exception e)
             {
@@ -36,10 +49,20 @@ namespace LoginRegistroAPI.Controllers
         [HttpPost("CrearUsuario")]
         public async Task<string> CrearUsuario([FromBody] Usuario ob)
         {
+           
             try
             {
                 var response = await _usuario.PostRegistrar(ob);
-                return response.ToString();
+                if (response == "Error")
+                {
+                    return Exception();
+                }
+                else
+                {
+                    return response.ToString();
+                }       
+
+                
             }
             catch (Exception e)
             {
@@ -49,6 +72,8 @@ namespace LoginRegistroAPI.Controllers
 
 
         }
+
+       
 
         [HttpPost("CargarArchivo")]
         public async Task<string> CargarArchivo([FromForm] Documentos ob)

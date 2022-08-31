@@ -29,6 +29,27 @@ namespace LoginRegistroAPI.Servicios.Logica
 
         public async Task<string> PostRegistrar(Usuario Ob)
         {
+            string control;
+        
+
+
+            if (Ob.Contraseña == Ob.ConfirmarClave)
+            {
+                Ob.Contraseña = ConvertirSHA256(Ob.Contraseña);
+            }
+
+            if (Ob.Contraseña != Ob.ConfirmarClave)
+            {
+                control = "Error";
+            }
+            else
+            {
+                control = "Se ha creado el usuario con exito";
+            }
+
+
+
+
             using (SqlConnection conexion = new(cn.GetCadenaSQL()))
             {
                 conexion.Open();
@@ -37,11 +58,13 @@ namespace LoginRegistroAPI.Servicios.Logica
                 cmd.Parameters.AddWithValue("UserName", Ob.UserName);
                 cmd.Parameters.AddWithValue("Email", Ob.Email);
                 cmd.Parameters.AddWithValue("Contraseña", Ob.Contraseña);
+                cmd.Parameters.AddWithValue("BioUsuario", Ob.BioUsuario);
+               
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.ExecuteNonQuery();
+                
             }
-            var response = "Se ha creado el usuario con exito";
-            return await Task.FromResult(response);
+            return await Task.FromResult(control);
         }
 
         public async Task<string> PostLogin(UsuarioLogin Ob)
@@ -49,26 +72,41 @@ namespace LoginRegistroAPI.Servicios.Logica
 
             try
             {
-
+                string _res;
+                //Usuario usu = new Usuario();
                 using (SqlConnection conexion = new(cn.GetCadenaSQL()))
                 {
+
                     conexion.Open();
                     var cmd = new SqlCommand("SP_Login", conexion);
+                    //--------AGREGAR METODO PARA ENCRIPTAR LA CONTRASEÑA EN ESTA LINEA----------------//
+
                     cmd.Parameters.AddWithValue("Email", Ob.Email);
                     cmd.Parameters.AddWithValue("Contraseña", Ob.Contraseña);
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.ExecuteNonQuery();
+
+
+                    Ob.Id = Convert.ToInt32(cmd.ExecuteScalar().ToString());
 
                 }
+                if (Ob.Id != 0)
+                {
+                    //LLAMAMOS AL METODO QUE GENERO EL JW T("Autorizacion(Ob)") Y LO ALMACENAMOS EN "response"  
+                    string response = Autorizacion(Ob);
+                    _res = response;
+                }
+                else
+                {
+                    _res = "Error";
+                }
+                return await Task.FromResult(_res);
 
-                //LLAMAMOS AL METODO QUE GENERO EL JW T("Autorizacion(Ob)") Y LO ALMACENAMOS EN "response"                
-                string response = Autorizacion(Ob);
-                return await Task.FromResult(response.ToString());
+
             }
-            catch (Exception)
+            catch (Exception e)
             {
 
-                throw;
+                throw new Exception(e.Message.ToString());
             }
 
         }
@@ -118,7 +156,7 @@ namespace LoginRegistroAPI.Servicios.Logica
                 {
                     lista.Add(new Usuario()
                     {
-                        IdUsuario = Convert.ToInt32(reader["Id"]),
+                        Id = Convert.ToInt32(reader["Id"]),
                         Nombre = reader["Nombre"].ToString(),
                         UserName = reader["UserName"].ToString(),
                         Email = reader["Email"].ToString(),
@@ -158,6 +196,31 @@ namespace LoginRegistroAPI.Servicios.Logica
             //--------------------------------LECTURA DEL TOKEN END-----------------------------------//
         }
         //----------------------------METODO PARA CREAR Y LEER EL JWT END-------------------------------------//
+
+
+        //----------------------------METODO PARA CIFRAR LA CONTRASEÑA START--------------------------------------------//
+
+
+        public static string ConvertirSHA256(string text)
+        {
+            if (text == null)
+            {
+                return null;
+            }
+
+            StringBuilder sb = new StringBuilder();
+            using (SHA256 hash = SHA256.Create())
+            {
+                Encoding enc = Encoding.UTF8;
+                byte[] result = hash.ComputeHash(enc.GetBytes(text));
+                foreach (byte b in result)
+                    sb.Append(b.ToString("x2"));
+            }
+            return sb.ToString();
+
+        }
+
+        //----------------------------METODO PARA CIFRAR LA CONTRASEÑA END--------------------------------------------//
     }
 }
 
