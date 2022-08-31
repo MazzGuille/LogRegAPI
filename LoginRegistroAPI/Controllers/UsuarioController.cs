@@ -49,20 +49,11 @@ namespace LoginRegistroAPI.Controllers
         [HttpPost("CrearUsuario")]
         public async Task<string> CrearUsuario([FromBody] Usuario ob)
         {
-           
+
             try
             {
                 var response = await _usuario.PostRegistrar(ob);
-                if (response == "Error")
-                {
-                    return Exception();
-                }
-                else
-                {
-                    return response.ToString();
-                }       
-
-                
+                return response.ToString();
             }
             catch (Exception e)
             {
@@ -73,7 +64,7 @@ namespace LoginRegistroAPI.Controllers
 
         }
 
-       
+
 
         [HttpPost("CargarArchivo")]
         public async Task<string> CargarArchivo([FromForm] Documentos ob)

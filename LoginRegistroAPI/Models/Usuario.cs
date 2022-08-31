@@ -12,9 +12,10 @@ namespace LoginRegistroAPI.Models
         public string Nombre { get; set; }
         [Required]
         public string UserName { get; set; }
-        [Required]
+        [Required]        
         public string Contraseña { get; set; }
         [Required]
+        [Compare("Contraseña")]        
         public string ConfirmarClave { get; set; }
         public string BioUsuario { get; set; }
 

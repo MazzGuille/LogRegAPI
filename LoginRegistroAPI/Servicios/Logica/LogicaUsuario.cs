@@ -29,8 +29,8 @@ namespace LoginRegistroAPI.Servicios.Logica
 
         public async Task<string> PostRegistrar(Usuario Ob)
         {
-            string control;
-        
+            //string control;
+
 
 
             if (Ob.Contraseña == Ob.ConfirmarClave)
@@ -38,14 +38,14 @@ namespace LoginRegistroAPI.Servicios.Logica
                 Ob.Contraseña = ConvertirSHA256(Ob.Contraseña);
             }
 
-            if (Ob.Contraseña != Ob.ConfirmarClave)
-            {
-                control = "Error";
-            }
-            else
-            {
-                control = "Se ha creado el usuario con exito";
-            }
+            //if (Ob.Contraseña != Ob.ConfirmarClave)
+            //{
+            //    control = "Error";
+            //}
+            //else
+            //{
+            //    control = "Se ha creado el usuario con exito";
+            //}
 
 
 
@@ -59,12 +59,13 @@ namespace LoginRegistroAPI.Servicios.Logica
                 cmd.Parameters.AddWithValue("Email", Ob.Email);
                 cmd.Parameters.AddWithValue("Contraseña", Ob.Contraseña);
                 cmd.Parameters.AddWithValue("BioUsuario", Ob.BioUsuario);
-               
+
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.ExecuteNonQuery();
-                
+
             }
-            return await Task.FromResult(control);
+            string mensaje = "Se hacreado el usuario con exito";
+            return await Task.FromResult(mensaje);
         }
 
         public async Task<string> PostLogin(UsuarioLogin Ob)
