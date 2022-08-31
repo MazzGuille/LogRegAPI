@@ -62,7 +62,7 @@ namespace LoginRegistroAPI.Servicios.Logica
             try
             {
                 string _res;
-                //Usuario usu = new Usuario();
+                Ob.Contraseña = ConvertirSHA256(Ob.Contraseña);
                 using (SqlConnection conexion = new(cn.GetCadenaSQL()))
                 {
 
