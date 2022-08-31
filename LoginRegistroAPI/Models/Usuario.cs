@@ -7,6 +7,8 @@ namespace LoginRegistroAPI.Models
     {
         public int Id { get; set; }
         [Required]
+        //[DataType(DataType.EmailAddress)]
+        [EmailAddress]
         public string Email { get; set; }
         [Required]
         public string Nombre { get; set; }

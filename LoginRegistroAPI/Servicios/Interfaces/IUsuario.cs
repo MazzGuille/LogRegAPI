@@ -5,7 +5,7 @@ namespace LoginRegistroAPI.Servicios.Interfaces
 {
     public interface IUsuario
     {
-        Task<string> PostRegistrar(Usuario Ob);
+        Task<bool> PostRegistrar(Usuario Ob);
         Task<string> PostLogin(UsuarioLogin Ob);
         Task<List<Usuario>> GetAllUsuarios();
         Task<string> PostArchivos(Documentos Ob);

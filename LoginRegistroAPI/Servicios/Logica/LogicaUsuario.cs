@@ -27,28 +27,14 @@ namespace LoginRegistroAPI.Servicios.Logica
         }
         //---------------------------------------------(1)-(2)---------------------------------------------//
 
-        public async Task<string> PostRegistrar(Usuario Ob)
+        public async Task<bool> PostRegistrar(Usuario Ob)
         {
-            //string control;
-
-
+            bool registrado;
 
             if (Ob.Contraseña == Ob.ConfirmarClave)
             {
                 Ob.Contraseña = ConvertirSHA256(Ob.Contraseña);
             }
-
-            //if (Ob.Contraseña != Ob.ConfirmarClave)
-            //{
-            //    control = "Error";
-            //}
-            //else
-            //{
-            //    control = "Se ha creado el usuario con exito";
-            //}
-
-
-
 
             using (SqlConnection conexion = new(cn.GetCadenaSQL()))
             {
@@ -59,13 +45,15 @@ namespace LoginRegistroAPI.Servicios.Logica
                 cmd.Parameters.AddWithValue("Email", Ob.Email);
                 cmd.Parameters.AddWithValue("Contraseña", Ob.Contraseña);
                 cmd.Parameters.AddWithValue("BioUsuario", Ob.BioUsuario);
-
+                cmd.Parameters.Add("Registrado", SqlDbType.Bit).Direction = ParameterDirection.Output;
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.ExecuteNonQuery();
 
+                registrado = (bool)cmd.Parameters["Registrado"].Value;
             }
-            string mensaje = "Se hacreado el usuario con exito";
-            return await Task.FromResult(mensaje);
+
+            return await Task.FromResult(registrado);
+
         }
 
         public async Task<string> PostLogin(UsuarioLogin Ob)

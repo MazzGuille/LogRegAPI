@@ -47,19 +47,19 @@ namespace LoginRegistroAPI.Controllers
         }
 
         [HttpPost("CrearUsuario")]
-        public async Task<string> CrearUsuario([FromBody] Usuario ob)
+        public async Task<StatusCodeResult> CrearUsuario([FromBody] Usuario ob)
         {
+            var response = await _usuario.PostRegistrar(ob);
 
-            try
+            if (response)
             {
-                var response = await _usuario.PostRegistrar(ob);
-                return response.ToString();
+                return StatusCode(200);
             }
-            catch (Exception e)
+            else
             {
+                return StatusCode(400);
+            }
 
-                throw new Exception(e.Message.ToString());
-            }
 
 
         }
