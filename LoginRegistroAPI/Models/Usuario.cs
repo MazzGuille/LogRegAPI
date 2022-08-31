@@ -11,10 +11,14 @@ namespace LoginRegistroAPI.Models
         [EmailAddress]
         public string Email { get; set; }
         [Required]
+        [MinLength(6)]
         public string Nombre { get; set; }
         [Required]
+        [MinLength(4)]
+        [MaxLength(8)]
         public string UserName { get; set; }
-        [Required]        
+        [Required]
+        [MinLength(8)]
         public string Contraseña { get; set; }
         [Required]
         [Compare("Contraseña")]        
