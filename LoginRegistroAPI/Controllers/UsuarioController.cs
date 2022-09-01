@@ -3,6 +3,7 @@ using LoginRegistroAPI.Servicios.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualBasic;
 
 namespace LoginRegistroAPI.Controllers
 {
@@ -18,10 +19,7 @@ namespace LoginRegistroAPI.Controllers
             _usuario = Usuario;
         }
 
-        private string Exception()
-        {
-            throw new NotImplementedException();
-        }
+
 
         [HttpPost("Login")]
         public async Task<string> Login([FromBody] UsuarioLogin Ob)
@@ -46,19 +44,30 @@ namespace LoginRegistroAPI.Controllers
 
         }
 
-        [HttpPost("CrearUsuario")]
-        public async Task<StatusCodeResult> CrearUsuario([FromBody] Usuario ob)
+        [HttpPost("/api/[controller]/CrearUsuario")]
+        public async Task<string> CrearUsuario([FromBody] Usuario ob)
         {
-            var response = await _usuario.PostRegistrar(ob);
 
-            if (response)
+            try
             {
-                return StatusCode(200);
+
+                var response = await _usuario.PostRegistrar(ob);
+                if (response != false)
+                {
+                    return response.ToString();
+                }
+                else
+                {
+                    return null;
+                }
             }
-            else
+            catch (Exception e)
             {
-                return StatusCode(401);
+
+                throw new Exception(e.Message.ToString());
             }
+
+
 
 
 
