@@ -11,7 +11,7 @@ namespace LoginRegistroAPI.Models
         [EmailAddress]
         public string Email { get; set; }
         [Required]
-        [MinLength(6)]
+        [MinLength(4)]
         public string Nombre { get; set; }
         [Required]
         [MinLength(4)]
