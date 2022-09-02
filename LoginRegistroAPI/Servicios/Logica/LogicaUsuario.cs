@@ -104,10 +104,10 @@ namespace LoginRegistroAPI.Servicios.Logica
 
         public async Task<string> PostArchivos(Documentos Ob) //METODO PARA CARGAR ARCHIVOS
         {
-            string rutaDocumento = Path.Combine(_rutaArchivos, Ob.Archivo.FileName); //CREAMOS EL NOMBRE/RUTA ARCHIVO
 
             try
             {
+                string rutaDocumento = Path.Combine(_rutaArchivos, Ob.Archivo.FileName); //CREAMOS EL NOMBRE/RUTA ARCHIVO
                 using FileStream newFile = File.Create(rutaDocumento);//CREAMOS UN NUEVO ARCHIVO CON EL NOMBRE/RUTA CREADOS ANTERIORMENTE; 
                                                                       //EN ESTE PUNTO EL ARCHIVO ESTA EN BLANCO, SOLO CONTIENE UN NOMBRE/RUTA
                 Ob.Archivo.CopyTo(newFile);//COPIA EL ARCHIVO AL NOMBRE/RUTA CREADOS
@@ -117,7 +117,6 @@ namespace LoginRegistroAPI.Servicios.Logica
                 {
                     conexion.Open();
                     var cmd = new SqlCommand("SP_GuardarDocumentos", conexion);
-                    cmd.Parameters.AddWithValue("Descripcion", Ob.Descripcion);
                     cmd.Parameters.AddWithValue("Ruta", rutaDocumento);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.ExecuteNonQuery();
@@ -190,8 +189,6 @@ namespace LoginRegistroAPI.Servicios.Logica
 
 
         //----------------------------METODO PARA CIFRAR LA CONTRASEÑA START--------------------------------------------//
-
-
         public static string ConvertirSHA256(string text)
         {
             if (text == null)
@@ -210,7 +207,6 @@ namespace LoginRegistroAPI.Servicios.Logica
             return sb.ToString();
 
         }
-
         //----------------------------METODO PARA CIFRAR LA CONTRASEÑA END--------------------------------------------//
     }
 }

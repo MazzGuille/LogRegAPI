@@ -13,13 +13,10 @@ namespace LoginRegistroAPI.Controllers
     public class UsuarioController : ControllerBase
     {
         private readonly IUsuario _usuario;
-
         public UsuarioController(IUsuario Usuario)
         {
             _usuario = Usuario;
         }
-
-
 
         [HttpPost("Login")]
         public async Task<string> Login([FromBody] UsuarioLogin Ob)
@@ -52,7 +49,7 @@ namespace LoginRegistroAPI.Controllers
             {
 
                 var response = await _usuario.PostRegistrar(ob);
-                if (response != false)
+                if (response)
                 {
                     return response.ToString();
                 }
@@ -72,8 +69,6 @@ namespace LoginRegistroAPI.Controllers
 
 
         }
-
-
 
         [HttpPost("CargarArchivo")]
         public async Task<string> CargarArchivo([FromForm] Documentos ob)
